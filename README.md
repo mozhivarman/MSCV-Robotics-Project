@@ -33,11 +33,11 @@
 - [Introduction](#introduction)
 - [Prior Knowledge](#prior-knowledge)
 - [Tasks](#tasks)
-- [Implementation](#Implementation)
-   - [Image Calibration](#Image-Calibration)
-   - [HSV Filtering](#HSV-Filtering)
-   - [Cropping the Image](#Cropping-the-Image)
-   - [Control](#Control)
+- [Implementation](##Implementation)
+   - [Image Calibration](###Image-Calibration)
+   - [HSV Filtering](###HSV-Filtering)
+   - [Cropping the Image](###Cropping-the-Image)
+   - [Control](###Control)
 - [Setup](#Setup)
 - [Conclusions](#Conclusions)
 - [References](#References)
@@ -70,19 +70,19 @@ The lane has to follow the lanes with ***yellow*** on the left and ***white*** o
 The has to autonomous drive in between the lane with this prior knowledge.
 
 ## Tasks
-- ### Image Calibration 
+- #### Image Calibration 
 
 The Image from the raspicam has to be calibrated, so the image obtained will be contrast, sharper image of the lanes for us to filter using the HSV color space.
 
-- ### HSV Filtering
+- #### HSV Filtering
 
 The Image must be filted to get the ***yellow*** and ***white*** lane in the image. The filtering can be done in the HSV color Space rather than the RGB color Space because the color can be seperated in variations in the image color values due to various lightening conditions, shadows in HSV color spaceeasily.
 
-- ### Cropping the Image
+- #### Cropping the Image
 
 The whole image from the image is too large to process and the we do no need the whole image to navigate, so the image has to cropped to right infornt of the robot to naviaget the track autonomously. 
 
-- ### Control
+- #### Control
 
 The robot must maintain in the ***middle*** of the track to navigate the track. By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.
 
