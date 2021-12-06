@@ -80,14 +80,57 @@ The Image must be filted to get the ***yellow*** and ***white*** lane in the ima
 
 - ### Cropping the Image
 
-The whole image from the image is too large to process and the we do no need the whole image to navigate, so the image has to croppe to right infornt of the robot to naviaget the track autonomously. 
+The whole image from the image is too large to process and the we do no need the whole image to navigate, so the image has to cropped to right infornt of the robot to naviaget the track autonomously. 
 
 - ### Control
 
-The robot must maintain in the ***middle*** of the track to navigate the track.By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.
+The robot must maintain in the ***middle*** of the track to navigate the track. By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.
 
 
 ## Implementation
+
+For all the implementaton steps the following launch of files are to runned in the terminal.</br>
+*launch roscore on the *Remote PC*.
+```
+$ roscore
+```
+launch the turtlebot3 bringup in the Single Borad Computer(*SBC*) this strats the turtlebot3_core Node and starts publishing,subscribing the information between the SBC and sensor,actuators. 
+```
+$ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+```
+
+launch the turtlebot3 rpicamera Node to start the camera to capturing the images on the *SBC*:
+```
+$ roslaunch turtlebot3_bringup turtlebot3_rpicamera.launch 
+```
+- ### Image Calibration
+
+Start the rqt_reconfigurer on the *Remote PC* to calibrate the image:
+
+```
+$ rosrun rqt_reconfigure rqt_reconfigure
+```
+select the *raspicam_node* to cahnge the parameters.
+***insert images***
+
+Once the image is in good contrast, sharper the parameter can be save in a **yaml** file to used in the next step and kill the node.
+
+- ### HSV Filtering 
+
+With the parameters from image calibration, these parametes has to set to the image by running the rosnode on the *Remote PC* with the command below and start the hsv_detector node on the *Remote PC* .
+```
+$ rosrun turtlebot3_autorace_lane reconfigure_camera.py
+$ rosrun turtlebot3_autorace_lane hsv_detector.py
+```
+[**hsv_detector.py**](turtlebot3_autorace_lane/src/hsv_detector.py) is a implementation in python and opencv to filter the images with the desired color. It does this is by subscribing the topic **/raspicam_node/image/compressed** and convert the *sensor_msgs/Image* to opencv HSV Image and applies the filtering values from the trackbar to the filter the image. 
+***insert images***
+
+Once the values for noted to be entered in the config Kill the node.
+
+- ### Cropping the Image
+
+
+
 ## Setup
 ## Conclusions
 ## References
