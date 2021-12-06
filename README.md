@@ -1,7 +1,7 @@
 
 
 <p align="center">  
-   <img src = "images/ub.png" width = 400>
+   <img src = "images/ub.png" width = 200>
 </p >
 
 # <p align="center">University of Burgundy
