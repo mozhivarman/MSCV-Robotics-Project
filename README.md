@@ -33,6 +33,10 @@
 - [Introduction](#introduction)
 - [Prior Knowledge](#prior-knowledge)
 - [Tasks](#tasks)
+   * [Image Calibration](#image-calibration)
+   * [HSV Filtering](#hsv-filtering)
+   * [Cropping the Image](#croppin-the-image)
+   * [Control](#control)
 - [Implementation](#implementation)
 - [Setup](#setup)
 - [Conclusions](#conclusions)
@@ -56,11 +60,32 @@ TurtleBot3(Burger) is a programmable ROS-based mobile robot used in research and
 
 
 ## Prior Knowledge
+The lane has to follow the lanes with ***yellow*** on the left and ***white*** on the right and the distance between the lane remains constant throught out the track(even in turns and in the tunnel).
+
+<p align="center
+">  
+   <img src = "images/lane1.jpg" width = 200 height = 200>
+</p >
+
+The has to autonomous drive in between the lane with this prior knowledge.
+
 ## Tasks
 - Image Calibration 
+
+The Image from the raspicam has to be calibrated, so the image obtained will be contrast, sharper image of the lanes for us to filter using the HSV color space.
+
 - HSV Filtering
+
+The Image must be filted to get the ***yellow*** and ***white*** lane in the image. The filtering can be done in the HSV color Space rather than the RGB color Space because the color can be seperated in variations in the image color values due to various lightening conditions, shadows in HSV color spaceeasily.
 - Cropping the Image
+
+The whole image from the image is too large to process and the we do no need the whole image to navigate, so the image has to croppe to right infornt of the robot to naviaget the track autonomously. 
+
 - Control
+
+The robot must maintain in the ***middle*** of the track to navigate the track.By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.
+
+
 ## Implementation
 ## Setup
 ## Conclusions
