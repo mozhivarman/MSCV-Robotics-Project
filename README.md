@@ -33,14 +33,14 @@
 - [Introduction](#introduction)
 - [Prior Knowledge](#prior-knowledge)
 - [Tasks](#tasks)
+- [Implementation](#Implementation)
    - [Image Calibration](#Image-Calibration)
    - [HSV Filtering](#HSV-Filtering)
    - [Cropping the Image](#Cropping-the-Image)
    - [Control](#Control)
-- [Implementation](#implementation)
-- [Setup](#setup)
-- [Conclusions](#conclusions)
-- [References](#references)
+- [Setup](#Setup)
+- [Conclusions](#Conclusions)
+- [References](#References)
 
 
 
