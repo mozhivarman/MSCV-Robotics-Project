@@ -29,7 +29,7 @@
 
 
 ## Table of contents:
-- [AIM](#aim-of-the-project)
+- [AIM](#a  im-of-the-project)
 - [Introduction](#introduction)
 - [Prior Knowledge](#prior-knowledge)
 - [Tasks](#tasks)
@@ -38,13 +38,13 @@
    - [HSV Filtering](#HSV-Filtering-1)
    - [Cropping the Image](#Cropping-the-Image-1)
    - [Control](#Control-1)
-- [Setup](#Setup)
+- [Setup to run the package](#Setup-to-run-the-package)
 - [Conclusions](#Conclusions)
 - [References](#References)
 
 
 
-## AIM of the Project
+## Aim of the Project
 
 The Aim of this project is to Demonstrate a Ground Robot (in our case its the [turtlebot3 burger](https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/) from [Robotis](https://emanual.robotis.com/))
 performing Autonomous Driving by Perception (perform Lane Detection and Autonomus Driving of the robot).The project has to done with the [ROS Melodic](http://wiki.ros.org/melodic).
@@ -90,7 +90,7 @@ The robot must maintain in the ***middle*** of the track to navigate the track. 
 ## Implementation
 
 For all the implementaton steps the following launch of files are to runned in the terminal.</br>
-*launch roscore on the *Remote PC*.
+launch roscore on the *Remote PC*.
 ```
 $ roscore
 ```
@@ -125,12 +125,22 @@ $ rosrun turtlebot3_autorace_lane hsv_detector.py
 [**hsv_detector.py**](turtlebot3_autorace_lane/src/hsv_detector.py) is a implementation in python and opencv to filter the images with the desired color. It does this is by subscribing the topic **/raspicam_node/image/compressed** and convert the *sensor_msgs/Image* to opencv HSV Image and applies the filtering values from the trackbar to the filter the image. 
 ***insert images***
 
-Once the values for noted to be entered in the config Kill the node.
+Once the values for noted to be entered in [config file](turtlebot3_autorace_lane/config/config.yaml) and Kill the node.
 
 - ### Cropping the Image
+The image from the camera is of size size 480 x 640, but this is too big to process in real time control, so we can crop the image so that image is smaller that is easy to process. The cropped image has to be right infront of the robot,so the robot can use this image to naviate the track.
+enter dynamic_reconfigurethe follwoing command on the *Remote PC*
+```dyndynamic_reconfigureamic_reconfigure
+$ rosrun turtlebot3_autorace_lane image_resize_parameter.py
+```
+[**image_resize_parameter.py**](turtlebot3_autorace_lane/src/image_resize_parameter.py) is a implementation in python with the ros dynamic reconfigure server to configure the image coordinate to be cropped. It does this is by subscribing the topic **/raspicam_node/image/compressed** and convert the *sensor_msgs/Image* to opencv image, and then lines to drawn on the image to reflect the region to be cropped later.The parameters are to update in the [config file](turtlebot3_autorace_lane/config/config.yaml). I tried to use the homography to get the image infront of the robot,but computing homography is time consuming and is not real-time for this image size on the robot.
 
+- ### Control
+The Robot's velocity can be controlled by publishing to **/cmd_vel** topic.
+[**line_moment.py**](turtlebot3_autorace_lane/src/line_moment.py) is a implementation in python and opencv to filter image and find the centroid lanes to maintain in the middle of the track. It subscribes to  the topic **/raspicam_node/image/compressed** and crops with the image coordinates set in the [config file](turtlebot3_autorace_lane/config/config.yaml) and applies the filter on the image to obtain the mask for yellow and white color in the cropped image, with these masked image. The moment are computed to publishes the centroid of the lane for the robot in the topic **/control_lane**.</br>
 
+[**line_moment.py**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
 
-## Setup
+## Setup to run the package
 ## Conclusions
 ## References

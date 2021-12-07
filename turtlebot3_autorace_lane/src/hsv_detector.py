@@ -13,7 +13,7 @@
 import cv2
 import rospy
 ### To get the image from the published image
-from ImageSubscriber import imageSubsribe
+from imageSubscriber import imageSubsribe
 
 
 def callback(value):
