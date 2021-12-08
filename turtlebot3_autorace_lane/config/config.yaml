@@ -1,7 +1,3 @@
-pathTOYellowMask : '/home/mscv_gr1/catkin_ws/src/MSCV-Robotics-Project/turtlebot3_autorace_lane/config/mask_yellow.png'
-pathTOWhiteMask : '/home/mscv_gr1/catkin_ws/src/MSCV-Robotics-Project/turtlebot3_autorace_lane/config/mask_white.png'
-
-
 YellowMaskMinHSV : 
   - 0
   - 100

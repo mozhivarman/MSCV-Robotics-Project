@@ -8,10 +8,11 @@
 
 
 
-# 
+from sys import path
 import cv2
 import rospy
 import numpy as np
+import rospkg
 from cv_bridge import CvBridge
 from std_msgs.msg import Float64
 from dynamic_reconfigure.server import Server
@@ -20,7 +21,7 @@ from sensor_msgs.msg import Image,CompressedImage
 
 
 class LineMoment:
-    def __init__(self):
+    def __init__(self,Path):
 
         self.top_x1 = rospy.get_param("/top_x11", 0)
         self.top_y1 =  rospy.get_param("/top_y1", 415)
@@ -33,25 +34,23 @@ class LineMoment:
         self.bottom_y2 =     rospy.get_param("/bottom_y2", 480)
 
 
-
+        
         self.sub = rospy.Subscriber('/raspicam_node/image/compressed',CompressedImage,callback=self.CallBack)
         self.pub = rospy.Publisher('/cropped_image/compressed',CompressedImage,queue_size=1)
         self.pub_yellow = rospy.Publisher('/image/yellow/compressed',CompressedImage,queue_size=1)
         self.pub_white = rospy.Publisher('/image/white/compressed',CompressedImage,queue_size=1)
-
-
         self.control_lane = rospy.Publisher('/control_lane', Float64, queue_size = 1)
 
-        self.pathTOYellowMask = rospy.get_param('/pathTOYellowMask','/home/mscv_gr1/catkin_ws/src/MSCV-Robotics-Project/turtlebot3_autorace_lane/config/mask_yellow.png')
-        self.pathTOWhiteMask = rospy.get_param('/pathTOWhiteMask','/home/mscv_gr1/catkin_ws/src/MSCV-Robotics-Project/turtlebot3_autorace_lane/config/mask_white.png')
+        self.pathTOYellowMask = Path+'/config/mask_yellow.png'
+        self.pathTOWhiteMask  = Path+'/config/mask_white.png'
 
         self.lastYellowMask = cv2.imread(self.pathTOYellowMask,0)
         self.lastWhiteMask =  cv2.imread(self.pathTOWhiteMask,0)
 
-        # if self.lastWhiteMask == None:
-        #     rospy.logerr("lastWhiteMask is None")
-        # if self.lastYellowMask == None:
-        #     rospy.logerr("lastWhiteMask is None")
+        if self.lastWhiteMask is None:
+            rospy.logerr("lastWhiteMask is None")
+        if self.lastYellowMask is None:
+            rospy.logerr("lastWhiteMask is None")
 
         self.HSVYellowmaskMin = rospy.get_param('YellowMaskMinHSV',[0,100,170])
         self.HSVYellowmaskMax = rospy.get_param('YellowMaskMaxHSV',[90,255,255])
@@ -121,8 +120,11 @@ class LineMoment:
 if __name__ == '__main__':
     # Initialize a ROS Node
     rospy.init_node('line_moment')
-    line = LineMoment()
+    rospack = rospkg.RosPack()
+    packagePath = rospack.get_path('turtlebot3_autorace_lane')
+    line = LineMoment(packagePath)
     rospy.wait_for_message('/raspicam_node/image/compressed',CompressedImage,timeout=10)
+    
     try:
         rospy.spin()
     except rospy.ROSException as e:

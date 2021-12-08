@@ -5,12 +5,18 @@ import numpy as np
 import rospy
 from sensor_msgs.msg import Image,CompressedImage
 from cv_bridge import CvBridge
+import rospkg
 
 
-mainVideo = cv2.VideoWriter('video/Main.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,480 ))
-cropedVideo = cv2.VideoWriter('video/cropped.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,80 ))
-YellowMaskVideo = cv2.VideoWriter('video/YellowMaskVideo.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,80 ))
-WhiteMaskVideo = cv2.VideoWriter('video/WhiteMaskVideo.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,80 ))
+rospack = rospkg.RosPack()
+packagePath = rospack.get_path('turtlebot3_autorace_lane')
+
+
+
+mainVideo = cv2.VideoWriter(packagePath+'/video/Main.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,480 ))
+cropedVideo = cv2.VideoWriter(packagePath+'/video/cropped.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,80 ))
+YellowMaskVideo = cv2.VideoWriter(packagePath+'/video/YellowMaskVideo.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,80 ))
+WhiteMaskVideo = cv2.VideoWriter(packagePath+'/video/WhiteMaskVideo.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 15, (640,80 ))
 
 
 def fnShutDown():
@@ -22,10 +28,7 @@ def fnShutDown():
 
 class rosCameraVideo:
     def __init__(self):
-        # self.frame_width = None
-        # self.frame_height = None
-        # out = cv2.VideoWriter('outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-        # out.release()
+
 
         self.Mainvideo = rospy.Subscriber('/raspicam_node/image/compressed',CompressedImage,callback=self.CallBackMain)
         self.cropedImage = rospy.Subscriber('/cropped_image/compressed',CompressedImage,callback=self.CallBackCrop)
@@ -57,7 +60,7 @@ class rosCameraVideo:
             WhiteMaskVideo.write(image)
 
 if __name__ == '__main__':
-    rospy.init_node('video_recored')
+    rospy.init_node('video_record')
     
     try:
         vi = rosCameraVideo()

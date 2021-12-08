@@ -2,11 +2,7 @@
 <launch>
     <rosparam command="load" file="$(find turtlebot3_autorace_lane)/config/config.yaml"/>
     <node pkg="turtlebot3_autorace_lane" name="reconfigure_camera" type="reconfigure_camera.py" output="screen"/>
-    <node pkg="turtlebot3_autorace_lane" name="line_moment" type="line_moment.py" output="screen"/>
-    <!-- <node pkg="turtlebot3_autorace_lane" name="control_lane" type="control_lane.py" output="screen"/> -->
-    <!-- <node pkg="turtlebot3_autorace_lane" name="" type="" output="screen"/>
-    <node pkg="turtlebot3_autorace_lane" name="" type="" output="screen"/>
-    <node pkg="turtlebot3_autorace_lane" name="" type="" output="screen"/> -->
+    <node pkg="turtlebot3_autorace_lane" name="line_moment" type="line_moment.py" output="screen"/>    
   <node pkg="rqt_image_view" type="rqt_image_view" name="image_view_debug" args="/cropped_image/compressed"/>
 
 </launch>

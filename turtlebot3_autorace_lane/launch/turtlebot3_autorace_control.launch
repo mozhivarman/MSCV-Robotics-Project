@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="turtlebot3_autorace_lane" name="control_lane" type="control_lane.py" output="screen"/>
+    <node pkg="turtlebot3_autorace_lane" name="video_record" type="video_record.py" output="screen"/>    
+  <node pkg="rqt_image_view" type="rqt_image_view" name="image_view_debug" args="/cropped_image/compressed"/>
+
+</launch>
