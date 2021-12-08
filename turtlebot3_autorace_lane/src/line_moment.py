@@ -16,49 +16,61 @@ from cv_bridge import CvBridge
 from std_msgs.msg import Float64
 from dynamic_reconfigure.server import Server
 from sensor_msgs.msg import Image,CompressedImage
-from turtlebot3_autorace_lane.cfg import ImageProjectionParametersConfig
 
 
 
 class LineMoment:
     def __init__(self):
 
-        self.top_x1 = rospy.get_param("/camera/extrinsic_camera_calibration/top_x11", 0)
-        self.top_y1 =  rospy.get_param("/camera/extrinsic_camera_calibration/top_y1", 415)
-        self.bottom_x1 = rospy.get_param("/camera/extrinsic_camera_calibration/bottom_x1", 640)
-        self.bottom_y1 =     rospy.get_param("/camera/extrinsic_camera_calibration/bottom_y1", 415)
+        self.top_x1 = rospy.get_param("/top_x11", 0)
+        self.top_y1 =  rospy.get_param("/top_y1", 415)
+        self.bottom_x1 = rospy.get_param("/bottom_x1", 640)
+        self.bottom_y1 =     rospy.get_param("/bottom_y1", 415)
         
-        self.top_x2 = rospy.get_param("/camera/extrinsic_camera_calibration/top_x2", 0)
-        self.top_y2 =  rospy.get_param("/camera/extrinsic_camera_calibration/top_y2", 480)
-        self.bottom_x2 = rospy.get_param("/camera/extrinsic_camera_calibration/bottom_x2", 640)
-        self.bottom_y2 =     rospy.get_param("/camera/extrinsic_camera_calibration/bottom_y2", 480)
-        srv_image_projection = Server(ImageProjectionParametersConfig, self.cbGetImageProjectionParam) 
+        self.top_x2 = rospy.get_param("/top_x2", 0)
+        self.top_y2 =  rospy.get_param("/top_y2", 480)
+        self.bottom_x2 = rospy.get_param("/bottom_x2", 640)
+        self.bottom_y2 =     rospy.get_param("/bottom_y2", 480)
 
 
 
         self.sub = rospy.Subscriber('/raspicam_node/image/compressed',CompressedImage,callback=self.CallBack)
-        self.pub = rospy.Publisher('cropped_image/compressed',CompressedImage,queue_size=1)
-        self.pub_yellow = rospy.Publisher('image/yellow/compressed',CompressedImage,queue_size=1)
-        self.pub_white = rospy.Publisher('image/white/compressed',CompressedImage,queue_size=1)
+        self.pub = rospy.Publisher('/cropped_image/compressed',CompressedImage,queue_size=1)
+        self.pub_yellow = rospy.Publisher('/image/yellow/compressed',CompressedImage,queue_size=1)
+        self.pub_white = rospy.Publisher('/image/white/compressed',CompressedImage,queue_size=1)
 
 
         self.control_lane = rospy.Publisher('/control_lane', Float64, queue_size = 1)
 
+        self.pathTOYellowMask = rospy.get_param('/pathTOYellowMask','/home/mscv_gr1/catkin_ws/src/MSCV-Robotics-Project/turtlebot3_autorace_lane/config/mask_yellow.png')
+        self.pathTOWhiteMask = rospy.get_param('/pathTOWhiteMask','/home/mscv_gr1/catkin_ws/src/MSCV-Robotics-Project/turtlebot3_autorace_lane/config/mask_white.png')
 
-        self.lastYellowMask = cv2.imread('/home/mscv_gr1/catkin_ws/src/my_following_line_package/src/mask_yellow.png',0)
-        self.lastWhiteMask =  cv2.imread('/home/mscv_gr1/catkin_ws/src/my_following_line_package/src/mask_white.png',0)
+        self.lastYellowMask = cv2.imread(self.pathTOYellowMask,0)
+        self.lastWhiteMask =  cv2.imread(self.pathTOWhiteMask,0)
 
+        # if self.lastWhiteMask == None:
+        #     rospy.logerr("lastWhiteMask is None")
+        # if self.lastYellowMask == None:
+        #     rospy.logerr("lastWhiteMask is None")
+
+        self.HSVYellowmaskMin = rospy.get_param('YellowMaskMinHSV',[0,100,170])
+        self.HSVYellowmaskMax = rospy.get_param('YellowMaskMaxHSV',[90,255,255])
+
+        self.HSVWthiemaskMin = rospy.get_param('WhiteMaskMinHSV',[30,0,173])
+        self.HSVWhitemaskMax = rospy.get_param('WHiteMaskMaxHSV',[90,65,255])
 
         self.control_lane_msg = Float64()
 
 
         self.cvBridge = CvBridge()
+
+        self.printImageProjectionParam()
         
-    def cbGetImageProjectionParam(self, config, level):
+    def printImageProjectionParam(self):
         rospy.loginfo("Image Resize paramters :")
-        rospy.loginfo("top_x1 : %d, top_y1 : %d, bottom_x1 : %d, bottom_y1 : %d", config.top_x1, config.top_y1, config.bottom_x1, config.bottom_y1)
-        rospy.loginfo("top_x2 : %d, top_y2 : %d, bottom_x2 : %d, bottom_y2 : %d", config.top_x2, config.top_y2, config.bottom_x2, config.bottom_y2)
-        return config
+        rospy.loginfo("top_x1 : %d, top_y1 : %d, bottom_x1 : %d, bottom_y1 : %d", self.top_x1, self.top_y1, self.bottom_x1, self.bottom_y1)
+        rospy.loginfo("top_x2 : %d, top_y2 : %d, bottom_x2 : %d, bottom_y2 : %d", self.top_x2, self.top_y2, self.bottom_x2, self.bottom_y2)
+   
     def CallBack(self,msg):
         image = self.cvBridge.compressed_imgmsg_to_cv2(msg,'bgr8')
         # image = image[415:480,0:635]
@@ -67,13 +79,12 @@ class LineMoment:
         hsv = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)   
         # print(image.shape)     
 
-        mask_yellow = cv2.inRange(hsv,(0,105,170),(255,255,255))
-        mask_white = cv2.inRange(hsv,(30,0,173),(90,65,255))
+        mask_yellow = cv2.inRange(hsv,tuple(self.HSVYellowmaskMin),tuple(self.HSVYellowmaskMax))
+        mask_white = cv2.inRange(hsv,tuple(self.HSVWthiemaskMin),tuple(self.HSVWhitemaskMax))
 
 
         # cv2.imwrite('mask_white.png',mask_white)
         # cv2.imwrite('mask_yellow.png',mask_yellow)
-        # # t = time.time()
         if  np.count_nonzero(mask_yellow) < 35:
             mask_yellow  = self.lastYellowMask
 
@@ -105,14 +116,13 @@ class LineMoment:
 
         self.control_lane_msg.data = float(cx3)
         self.control_lane.publish(self.control_lane_msg)
-        print( self.control_lane_msg.data )
-
+        print( "The centroid of the image : {}".format(self.control_lane_msg.data ))
 
 if __name__ == '__main__':
     # Initialize a ROS Node
     rospy.init_node('line_moment')
     line = LineMoment()
-    rospy.wait_for_message('/raspicam_node/image/compressed',CompressedImage,timeout=10000)
+    rospy.wait_for_message('/raspicam_node/image/compressed',CompressedImage,timeout=10)
     try:
         rospy.spin()
     except rospy.ROSException as e:

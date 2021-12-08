@@ -5,12 +5,13 @@ import dynamic_reconfigure.client
 import sys
 
 
-contrast = 20
-sharpness = 100
-brightness = 50
-saturation = 25
-ISO = 100
-exposure_compensation = -4
+contrast   = rospy.get_param('contrast',20)
+sharpness  = rospy.get_param('sharpness',100)
+brightness = rospy.get_param('brightness',50)
+saturation = rospy.get_param('saturation',25)
+ISO        = rospy.get_param('ISO',100)
+exposure_compensation = rospy.get_param('exposure_compensation',-4)
+
 
 class Camrareconfigure : 
     def  __init__(self):
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     # rospy.set_param('/raspicam_node/brightness',50)
     # rospy.set_param('/raspicam_node/saturation',25)
     # rospy.set_param('/raspicam_node/ISO',100)
-    # rospy.set_param('/raspicam_node/exposure_compensation',-7)
+    # rospy.set_param('/raspicam_node/exposure_compensation',-4)
 
     camera = Camrareconfigure()
     try: 
