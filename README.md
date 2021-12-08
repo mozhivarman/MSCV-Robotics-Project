@@ -29,7 +29,7 @@
 
 
 ## Table of contents:
-- [AIM](#a  im-of-the-project)
+- [AIM](#aim-of-the-project)
 - [Introduction](#introduction)
 - [Prior Knowledge](#prior-knowledge)
 - [Tasks](#tasks)
