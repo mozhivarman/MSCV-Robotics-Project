@@ -24,12 +24,12 @@
 ## <p align="center">Students:</p >
 
 <p align="center">Shriarulmozhivarman GOBICHETTIPALAYAM</p>
-<p align="center">Shriarulmozhivarman Gobichettipalayam</p>
+<p align="center">Etinosa Matthew IKPONMWOSA</p>
 
 
 
 ## Table of contents:
-- [AIM](#aim-of-the-project)
+- [Aim of the Project](#aim-of-the-project)
 - [Introduction](#introduction)
 - [Prior Knowledge](#prior-knowledge)
 - [Tasks](#tasks)
