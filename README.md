@@ -65,6 +65,8 @@ The lane has to follow the lanes with ***yellow*** on the left and ***white*** o
 <p align="center
 ">  
    <img src = "images/lane1.jpg" width = 200 height = 200>
+   <img src = "images/lane2.jpg" width = 200 height = 200>
+
 </p >
 
 The has to autonomous drive in between the lane with this prior knowledge.
@@ -74,17 +76,36 @@ The has to autonomous drive in between the lane with this prior knowledge.
 
 The Image from the raspicam has to be calibrated, so the image obtained will be contrast, sharper image of the lanes for us to filter using the HSV color space.
 
+<p align="center
+">
+<img src="images/Screenshot1.png" width="300" height= "300"> <img src="images/Screenshot2.png" width="300" height= "300"> 
+</p>
+
 - #### HSV Filtering
 
 The Image must be filted to get the ***yellow*** and ***white*** lane in the image. The filtering can be done in the HSV color Space rather than the RGB color Space because the color can be seperated in variations in the image color values due to various lightening conditions, shadows in HSV color spaceeasily.
+
+
+<p align="center
+">
+<img src="images/Screenshot9.png" width="450" height= "300"> <img src="images/Screenshot10.png" width="450" height= "300"> 
+</p>
 
 - #### Cropping the Image
 
 The whole image from the image is too large to process and the we do no need the whole image to navigate, so the image has to cropped to right infornt of the robot to naviaget the track autonomously. 
 
+
+
+<p align="center
+">
+<img src="images/Screenshot3.png" width="300" height= "300">  
+</p>
+
 - #### Control
 
 The robot must maintain in the ***middle*** of the track to navigate the track. By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.
+
 
 
 ## Implementation
@@ -137,9 +158,23 @@ $ rosrun turtlebot3_autorace_lane image_resize_parameter.py
 
 - ### Control
 The Robot's velocity can be controlled by publishing to **/cmd_vel** topic.
-[**line_moment.py**](turtlebot3_autorace_lane/src/line_moment.py) is a implementation in python and opencv to filter image and find the centroid lanes to maintain in the middle of the track. It subscribes to  the topic **/raspicam_node/image/compressed** and crops with the image coordinates set in the [config file](turtlebot3_autorace_lane/config/config.yaml) and applies the filter on the image to obtain the mask for yellow and white color in the cropped image, with these masked image. The moment are computed to publishes the centroid of the lane for the robot in the topic **/control_lane**.</br>
+[**line_moment.py**](turtlebot3_autorace_lane/src/line_moment.py) is a implementation in python and opencv to filter image and find the centroid lanes to maintain in the middle of the track. It subscribes to  the topic **/raspicam_node/image/compressed** and crops with the image coordinates set in the [config file](turtlebot3_autorace_lane/config/config.yaml) and applies the filter on the image to obtain the mask for yellow and white color in the cropped image, with these masked image. When in situations the robot sees one of the lines in the track, or when there are less than 35 pixels of a particular color in the mask, in these cases we use a mask of the color that were pre recorded.The moment are computed for the mask, and publish the centroid of the lane for the robot in the topic **/control_lane**.</br>
 
-[**line_moment.py**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
+
+<p align="center
+">
+<img src="images/Screenshot4.png" width="300" height= "300"> <img src="images/Screenshot5.png" width="300" height= "300"> 
+</p>
+
+
+<p align="center
+">
+<img src="images/Screenshot6.png" width="300" height= "300"> 
+</p>
+
+
+
+[**control_lane**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
 
 ## Setup to run the package
 ## Conclusions
