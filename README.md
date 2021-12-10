@@ -169,6 +169,19 @@ The Robot's velocity can be controlled by publishing to **/cmd_vel** topic.
 
 
 
+https://user-images.githubusercontent.com/42157171/145550785-83187410-1b12-4829-bf10-055185fd8b05.mp4
+
+The video above is captured of the mask of White lines in the lane from the cropped image.
+
+https://user-images.githubusercontent.com/42157171/145550804-7f8f7c02-d250-484c-9318-b039c229acc5.mp4
+
+The video above is captured of the mask of Yellow lines in the lane from the cropped image.
+
+https://user-images.githubusercontent.com/42157171/145550673-15ff7b39-9637-4fd0-a33b-02d376b86c82.mp4
+
+The video above is captured of the control with the lane the blue circle is the centrioid of the moments of both the lines.green is the moment of the white line and red is the moment of the red line.
+
+
 [**control_lane**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
 
 ## Setup to run the package
