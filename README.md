@@ -168,10 +168,6 @@ The Robot's velocity can be controlled by publishing to **/cmd_vel** topic.
 [**line_moment.py**](turtlebot3_autorace_lane/src/line_moment.py) is a implementation in python and opencv to filter image and find the centroid lanes to maintain in the middle of the track. It subscribes to  the topic **/raspicam_node/image/compressed** and crops with the image coordinates set in the [config file](turtlebot3_autorace_lane/config/config.yaml) and applies the filter on the image to obtain the mask for yellow and white color in the cropped image, with these masked image. When in situations the robot sees one of the lines in the track, or when there are less than 35 pixels of a particular color in the mask, in these cases we use a mask of the color that were pre recorded.The moment are computed for the mask, and publish the centroid of the lane for the robot in the topic **/control_lane**.</br>
 
 
-[![Watch the video](turtlebot3_autorace_lane/video/WhiteMaskVideo.avi)](turtlebot3_autorace_lane/video/WhiteMaskVideo.avi)
-
-
-
 
 [**control_lane**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
 
