@@ -104,9 +104,18 @@ The whole image from the image is too large to process and the we do no need the
 
 - #### Control
 
-The robot must maintain in the ***middle*** of the track to navigate the track. By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.
+The robot must maintain in the ***middle*** of the track to navigate the track. By cropping and filtering the whole image, we can estimate the pose of the robot with respect to the track from the image, with this pose and image we can get the error in the position of the robot in the image and apply velocity commands according to the error from the image.Detect the lines and control the robot with the a PID contorl.
+
+<p align="center
+">
+<img src="images/Screenshot4.png" width="300" height= "300"> <img src="images/Screenshot5.png" width="300" height= "300"> 
+</p>
 
 
+<p align="center
+">
+<img src="images/Screenshot6.png" width="300" height= "300"> 
+</p>
 
 ## Implementation
 
@@ -132,7 +141,6 @@ Start the rqt_reconfigurer on the *Remote PC* to calibrate the image:
 $ rosrun rqt_reconfigure rqt_reconfigure
 ```
 select the *raspicam_node* to cahnge the parameters.
-***insert images***
 
 Once the image is in good contrast, sharper the parameter can be save in a **yaml** file to used in the next step and kill the node.
 
@@ -144,7 +152,6 @@ $ rosrun turtlebot3_autorace_lane reconfigure_camera.py
 $ rosrun turtlebot3_autorace_lane hsv_detector.py
 ```
 [**hsv_detector.py**](turtlebot3_autorace_lane/src/hsv_detector.py) is a implementation in python and opencv to filter the images with the desired color. It does this is by subscribing the topic **/raspicam_node/image/compressed** and convert the *sensor_msgs/Image* to opencv HSV Image and applies the filtering values from the trackbar to the filter the image. 
-***insert images***
 
 Once the values for noted to be entered in [config file](turtlebot3_autorace_lane/config/config.yaml) and Kill the node.
 
@@ -161,16 +168,8 @@ The Robot's velocity can be controlled by publishing to **/cmd_vel** topic.
 [**line_moment.py**](turtlebot3_autorace_lane/src/line_moment.py) is a implementation in python and opencv to filter image and find the centroid lanes to maintain in the middle of the track. It subscribes to  the topic **/raspicam_node/image/compressed** and crops with the image coordinates set in the [config file](turtlebot3_autorace_lane/config/config.yaml) and applies the filter on the image to obtain the mask for yellow and white color in the cropped image, with these masked image. When in situations the robot sees one of the lines in the track, or when there are less than 35 pixels of a particular color in the mask, in these cases we use a mask of the color that were pre recorded.The moment are computed for the mask, and publish the centroid of the lane for the robot in the topic **/control_lane**.</br>
 
 
-<p align="center
-">
-<img src="images/Screenshot4.png" width="300" height= "300"> <img src="images/Screenshot5.png" width="300" height= "300"> 
-</p>
+[![Watch the video](turtlebot3_autorace_lane/video/WhiteMaskVideo.avi)](turtlebot3_autorace_lane/video/WhiteMaskVideo.avi)
 
-
-<p align="center
-">
-<img src="images/Screenshot6.png" width="300" height= "300"> 
-</p>
 
 
 
