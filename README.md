@@ -179,11 +179,13 @@ The video above is captured of the mask of Yellow lines in the lane from the cro
 
 https://user-images.githubusercontent.com/42157171/145550673-15ff7b39-9637-4fd0-a33b-02d376b86c82.mp4
 
-The video above is captured of the control with the lane the blue circle is the centrioid of the moments of both the lines.green is the moment of the white line and red is the moment of the red line.
+The video above is captured of the control with the lane the blue circle is the centrioid of the moments of both the lines.green is the moment of the white line and red is the moment of the red line.These video are captured with the video_record node from [**video_record**](turtlebot3_auto_lane/src/video_record.py).The value of the blue circle is used as a control.
 
 
 [**control_lane**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
 
 ## Setup to run the package
+
+
 ## Conclusions
 ## References
