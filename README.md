@@ -191,6 +191,27 @@ https://user-images.githubusercontent.com/42157171/145553308-20f958d2-b676-4e60-
 [**control_lane**](turtlebot3_autorace_lane/src/control_lane.py) subscribes to the topic **/control_lane** and computes the error and apply a PID control on the velocity of the robot to control it.
 
 ## Setup to run the package
+**Step-1** Launch roscore on *Remote PC*
+```
+$ roscore
+```
+**Step-2** Launch the turtlebot3 bringup on *SBC*
+```
+$ roslaunch turtlebot3_bringup turtlebot3 robot.launch
+```
+**Step-3** Launch the turtlebot3  raspicam Node to start the video capture *SBC*
+```
+$ roslaunch turtlebot3_bringup turtlebot3_rpicamera.launch
+```
+**Step-4** Launch the turtlebot3 auto race lane line moment on the *Remote PC*, this will give the croped image and centroid of the detected lane.
+```
+$  roslaunch turtlebot3_autorace_lane turtlebot3_autorace_lane.launch 
+```
+**Step-4** Launch the turtlebot3 auto race lane control on the *Remote PC*, to control the robot with the give centroid and record the video.
+
+```
+roslaunch turtlebot3_autorace_lane turtlebot3_autorace_control.launch 
+```
 
 
 ## Conclusions
