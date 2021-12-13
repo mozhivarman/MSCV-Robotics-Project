@@ -237,7 +237,7 @@ The performing Autonomous Driving by Perception (perform Lane Detection and Auto
 
 <p align="center
 ">
-<img src="images/rosgraph.png" width="900" height= "400"> 
+<img src="images/rosgraph.png" height= "400"> 
 </p>
 
 The above image is the rqt_graph with the nodes and their corrosponding publisher and subscribers for Autonomous Driving by Perception.
@@ -245,7 +245,7 @@ The above image is the rqt_graph with the nodes and their corrosponding publishe
 
 ## Conclusions
 
-As conclusions, We started with the Introduction to turtlebot 3. Then we continued to implement lane detection with the Opencv function and images from the turtlebot 3. Next, we used the detection to calculate each lane's centroid, with the mean of centroid implemented to Autonomous Driving by Perception. And create the ros launch file to call the scripts for demonstration. The approach that we demonstrated above is successfully implemented and gives excellent output on  Autonomous Driving by Perception (perform Lane Detection and Autonomous Driving of the robot)
+For conclusions, We started with the Introduction to turtlebot 3. Then we continued to implement lane detection with the Opencv function and images from the turtlebot 3. Next, we used the detection to calculate each lane's centroid, with the mean of centroid implemented to Autonomous Driving by Perception. And create the ros launch file to call the scripts for demonstration. The approach that we demonstrated above is successfully implemented and gives excellent output on  Autonomous Driving by Perception (perform Lane Detection and Autonomous Driving of the robot).
 
 
 
@@ -257,3 +257,5 @@ As conclusions, We started with the Introduction to turtlebot 3. Then we continu
 - [geometry_msgs](http://wiki.ros.org/geometry_msgs)
 - [sensor_msgs](http://wiki.ros.org/sensor_msgs)
 - [TurtleBot3 Offical Tutorials](https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/)
+- [ROS Perception in 5 Days Python](https://www.theconstructsim.com/robotigniteacademy_learnros/ros-courses-library/ros-perception-in-5-days/)
+- [OpenCV Basics for Robotics Python](https://www.theconstructsim.com/robotigniteacademy_learnros/ros-courses-library/opencv-basics-for-robotics/)
