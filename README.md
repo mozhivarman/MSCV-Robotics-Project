@@ -237,7 +237,7 @@ The performing Autonomous Driving by Perception (perform Lane Detection and Auto
 
 <p align="center
 ">
-<img src="images/rosgraph.png" height= "400"> 
+<img src="images/rosgraph.png" height= "600"> 
 </p>
 
 The above image is the rqt_graph with the nodes and their corrosponding publisher and subscribers for Autonomous Driving by Perception.
