@@ -217,27 +217,43 @@ roslaunch turtlebot3_autorace_lane turtlebot3_autorace_control.launch
 https://user-images.githubusercontent.com/42157171/145735045-11c2412c-cb6a-4259-bd3e-81247d35ea71.mp4
 
 
-
+The White Masked video for calculating the moment.
 
 
 https://user-images.githubusercontent.com/42157171/145735047-a70540f1-855a-4dbc-9b53-8a8581b8330c.mp4
 
-
+The Yellow Masked video for calculating the moment.
 
 
 https://user-images.githubusercontent.com/42157171/145735048-92f55576-a258-42fd-a022-b69171dea8f2.mp4
 
-
-
-
+The Centroid of the track.
 
 
 https://user-images.githubusercontent.com/42157171/145735120-0df1d6de-990c-44bb-9eca-d48e20fbf196.mp4
 
 
+The performing Autonomous Driving by Perception (perform Lane Detection and Autonomus Driving of the robot)
 
+<p align="center
+">
+<img src="images/rosgraph.png" height= "400"> 
+</p>
 
+The above image is the rqt_graph with the nodes and their corrosponding publisher and subscribers for Autonomous Driving by Perception.
 
 
 ## Conclusions
+
+As conclusions, We started with the Introduction to turtlebot 3. Then we continued to implement lane detection with the Opencv function and images from the turtlebot 3. Next, we used the detection to calculate each lane's centroid, with the mean of centroid implemented to Autonomous Driving by Perception. And create the ros launch file to call the scripts for demonstration. The approach that we demonstrated above is successfully implemented and gives excellent output on  Autonomous Driving by Perception (perform Lane Detection and Autonomous Driving of the robot)
+
+
+
 ## References
+
+- [ROS cv_bridge](http://wiki.ros.org/cv_bridge)
+- [ROS Tutorials](http://wiki.ros.org/ROS/Tutorials)
+- [find center of a blob (Centroid) using OpenCV ](https://learnopencv.com/find-center-of-blob-centroid-using-opencv-cpp-python/)
+- [geometry_msgs](http://wiki.ros.org/geometry_msgs)
+- [sensor_msgs](http://wiki.ros.org/sensor_msgs)
+- [TurtleBot3 Offical Tutorials](https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/)
