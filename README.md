@@ -60,7 +60,7 @@ TurtleBot3(Burger) is a programmable ROS-based mobile robot used in research and
 
 
 ## Prior Knowledge
-The lane has to follow the lanes with ***yellow*** on the left and ***white*** on the right and the distance between the lane remains constant throught out the track(even in turns and in the tunnel).
+The Robot has to follow the lanes with ***yellow*** on the left and ***white*** on the right and the distance between the lane remains constant throught out the track(even in turns and in the tunnel).
 
 <p align="center
 ">  
