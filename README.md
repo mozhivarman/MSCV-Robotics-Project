@@ -214,18 +214,21 @@ roslaunch turtlebot3_autorace_lane turtlebot3_autorace_control.launch
 ```
 
 
-https://user-images.githubusercontent.com/42157171/145735045-11c2412c-cb6a-4259-bd3e-81247d35ea71.mp4
-
+https://user-images.githubusercontent.com/42157171/146139118-a345d829-6a79-4b14-9139-520e6bb8bff8.mp4
 
 The White Masked video for calculating the moment.
 
 
-https://user-images.githubusercontent.com/42157171/145735047-a70540f1-855a-4dbc-9b53-8a8581b8330c.mp4
+
+https://user-images.githubusercontent.com/42157171/146139149-6e46ef2a-6bda-4910-9908-e0b7f6474990.mp4
+
 
 The Yellow Masked video for calculating the moment.
 
 
-https://user-images.githubusercontent.com/42157171/145735048-92f55576-a258-42fd-a022-b69171dea8f2.mp4
+
+https://user-images.githubusercontent.com/42157171/146139162-654c3f2a-3946-4698-bbfd-1f1e55909b30.mp4
+
 
 The Centroid of the track.
 
